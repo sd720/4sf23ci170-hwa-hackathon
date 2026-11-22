@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 /* eslint-disable */
 import {
   ShoppingCart,
@@ -44,8 +44,23 @@ export default function Checkout() {
     city: "",
     zip: "",
   });
-  const [items, setItems] = useState<OrderItem[]>([]);
-  const [submitting, setSubmitting] = useState(false);
+  const [items, setItems] = useState<OrderItem[]>(() => {
+  // Default to ChronoCore Starter Kit if no items
+  if (typeof window !== "undefined") {
+    const stored = localStorage.getItem("checkout-items");
+    if (stored) return JSON.parse(stored);
+  }
+  return [{ id: "starter", name: "ChronoCore Starter Kit", price: 69.99, quantity: 1 }];
+});
+
+// Persist items to localStorage
+useEffect(() => {
+  if (typeof window !== "undefined") {
+    localStorage.setItem("checkout-items", JSON.stringify(items));
+  }
+}, [items]);
+
+const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [orderId, setOrderId] = useState<string | null>(null);
 
@@ -65,16 +80,11 @@ export default function Checkout() {
       const data = await response.json();
 
       if (response.ok) {
-        setSuccess(true);
-        setOrderId(data.orderId);
-        setItems([]);
-        setCustomer({
-          name: "",
-          email: "",
-          address: "",
-          city: "",
-          zip: "",
-        });
+        // Redirect to order tracking page
+        const searchParams = new URLSearchParams();
+        searchParams.set("orderId", data.orderId);
+        const searchString = searchParams.toString();
+        window.location.href = `/order-tracking?${searchString}`;
       } else {
         alert(data.error || "Failed to place order");
       }

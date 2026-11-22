@@ -46,6 +46,12 @@ export default function Home() {
               <a href="#faq" className="transition-colors hover:text-white">
                 FAQ
               </a>
+              <a href="/checkout" className="transition-colors hover:text-white font-bold">
+                Checkout
+              </a>
+              <a href="/order-tracking" className="transition-colors hover:text-white font-medium">
+                Track Order
+              </a>
             </nav>
           </div>
         </div>
@@ -190,10 +196,12 @@ export default function Home() {
                       </ul>
                     </div>
 
-                    <button className="w-full flex items-center justify-center gap-3 px-6 py-4 rounded-xl font-bold text-lg bg-gradient-to-br from-amber-500 to-orange-600 text-slate-900 shadow-xl shadow-amber-500/40 hover:from-amber-400 hover:to-orange-500 transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:pointer-events-none">
+                    <a
+                      href="/checkout"
+                      className="w-full flex items-center justify-center gap-3 px-6 py-4 rounded-xl font-bold text-lg bg-gradient-to-br from-amber-500 to-orange-600 text-slate-900 shadow-xl shadow-amber-500/40 hover:from-amber-400 hover:to-orange-500 transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:pointer-events-none">
                       <ShoppingCart size={20} strokeWidth={2} />
-                      Add to Cart — $49.00
-                    </button>
+                      Build Your Capsule — $49.00
+                    </a>
                   </div>
                 </div>
               </div>
